@@ -8,7 +8,7 @@ branches:
     - master
 
 before_script:
-  - git fetch --unshallow
+  - git fetch --unshallow || true
 
 script:
   - ./build.sh
