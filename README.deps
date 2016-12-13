@@ -1,0 +1,8 @@
+This file is distributed with statically built binaries for make and
+busybox, that are used as helper tools for blogc websites when built on
+AWS Lambda service.
+
+For individual licenses, see licenses/ directory.
+
+For patches and scripts used to build the binaries, see:
+https://github.com/blogc/lambda-deps

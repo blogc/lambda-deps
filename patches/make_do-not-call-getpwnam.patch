@@ -1,0 +1,56 @@
+From 50e82daabd10b70aaa6bd06068499a27b61c284b Mon Sep 17 00:00:00 2001
+From: "Rafael G. Martins" <rafael@rafaelmartins.eng.br>
+Date: Mon, 12 Dec 2016 21:12:11 +0100
+Subject: [PATCH 1/2] read: do not call getpwnam, its not good for static
+ builds
+
+this is a blogc-github-lambda required patch. we have guarantees that
+aws lambda environment always set $HOME, so tilde expansion should work
+properly without getpwnam
+---
+ read.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/read.c b/read.c
+index b870aa8..4b36fd2 100644
+--- a/read.c
++++ b/read.c
+@@ -2937,7 +2937,7 @@ tilde_expand (const char *name)
+           free (home_dir);
+           home_dir = getenv ("HOME");
+         }
+-# if !defined(_AMIGA) && !defined(WINDOWS32)
++# if !defined(_AMIGA) && !defined(WINDOWS32) && !defined(__linux__)
+       if (home_dir == 0 || home_dir[0] == '\0')
+         {
+           char *logname = getlogin ();
+@@ -2949,7 +2949,7 @@ tilde_expand (const char *name)
+                 home_dir = p->pw_dir;
+             }
+         }
+-# endif /* !AMIGA && !WINDOWS32 */
++# endif /* !AMIGA && !WINDOWS32 && !LINUX */
+       if (home_dir != 0)
+         {
+           char *new = xstrdup (concat (2, home_dir, name + 1));
+@@ -2958,7 +2958,7 @@ tilde_expand (const char *name)
+           return new;
+         }
+     }
+-# if !defined(_AMIGA) && !defined(WINDOWS32)
++# if !defined(_AMIGA) && !defined(WINDOWS32) && !defined(__linux__)
+   else
+     {
+       struct passwd *pwent;
+@@ -2976,7 +2976,7 @@ tilde_expand (const char *name)
+       else if (userend != 0)
+         *userend = '/';
+     }
+-# endif /* !AMIGA && !WINDOWS32 */
++# endif /* !AMIGA && !WINDOWS32 && !LINUX */
+ #endif /* !VMS */
+   return 0;
+ }
+-- 
+2.9.3
+
