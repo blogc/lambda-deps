@@ -1,4 +1,4 @@
-PV=2016121322
+PV=$(cat .pv)
 
 PV_MAKE=4.2.1
 PV_BUSYBOX=1.25.1

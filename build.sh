@@ -2,6 +2,8 @@
 
 set -ex
 
+git describe --abbrev=4 HEAD | sed -e 's/_/./g' -e 's/-/./;s/\(.*\)-g/\1-/' > .pv
+
 source config.sh
 
 P_MAKE="make-${PV_MAKE}"

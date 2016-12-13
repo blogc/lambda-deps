@@ -2,4 +2,6 @@
 /root/
 /src/
 
+/.pv
+
 /blogc-lambda-deps-*.tar.xz*
