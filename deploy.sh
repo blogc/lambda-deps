@@ -7,6 +7,11 @@ if [[ "x${TRAVIS_PULL_REQUEST}" != "xfalse" ]]; then
     exit 0
 fi
 
+if [[ "x${TRAVIS_BRANCH}" != "xmaster" ]] && [[ "x${TRAVIS_TAG}" != xv* ]]; then
+    echo "This isn't master branch nor a valid tag. skipping deploy ..."
+    exit 0
+fi
+
 source config.sh
 
 PN=blogc-lambda-deps

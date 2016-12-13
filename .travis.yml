@@ -3,10 +3,6 @@ sudo: required
 language: c
 compiler: gcc
 
-branches:
-  only:
-    - master
-
 before_script:
   - git fetch --unshallow || true
 
