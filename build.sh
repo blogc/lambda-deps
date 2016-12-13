@@ -2,7 +2,12 @@
 
 set -ex
 
-git describe --abbrev=4 HEAD | sed -e 's/_/./g' -e 's/-/./;s/\(.*\)-g/\1-/' > .pv
+git describe --abbrev=4 HEAD | \
+    sed \
+        -e 's/_/./g' \
+        -e 's/-/./;s/\(.*\)-g/\1-/' \
+        -e 's/^v//' \
+    > .pv
 
 source config.sh
 
