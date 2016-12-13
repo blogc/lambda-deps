@@ -17,6 +17,10 @@ mkdir -p build root/{bin,licenses} src
 
 wget -c -P src/ "${SRC_MAKE}" "${SRC_BUSYBOX}"
 
+pushd src/ > /dev/null
+sha512sum -c ../checksums
+popd > /dev/null
+
 
 #### MAKE
 
